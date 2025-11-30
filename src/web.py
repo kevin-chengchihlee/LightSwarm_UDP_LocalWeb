@@ -188,7 +188,8 @@ HTML_TEMPLATE = """
     </div>
   </div>
 
-let lastResetCounter = -1;
+  <script>
+    let lastResetCounter = -1;
     
     // Initialize Brightness Line Chart
     const brightnessCtx = document.getElementById('brightnessChart').getContext('2d');
@@ -354,11 +355,13 @@ let lastResetCounter = -1;
       }
     });
 
+    // ✅ UPDATE WITH EXTERNAL RESET DETECTION
     async function updateCharts() {
       try {
         const response = await fetch('/data');
         const data = await response.json();
         
+        // ✅ DETECT EXTERNAL RESET (from button press)
         if (lastResetCounter !== -1 && data.reset_counter !== lastResetCounter) {
           console.log('🔄 External reset detected! Clearing charts...');
           
