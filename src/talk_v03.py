@@ -45,7 +45,7 @@ if __name__=='__main__':
         while True:
             if STATE.get_plot_enb():
                 PLOT.collect_data()   # run plot loop in main thread
-                time.sleep(0.1)
+                time.sleep(1)
     except KeyboardInterrupt:
         PLOT.plot_stop.set()
         time.sleep(0.1)
