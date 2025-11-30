@@ -26,9 +26,9 @@ if __name__=='__main__':
     ledMatrix_thread = threading.Thread(target=mat.show_swarm, daemon=True)
     ledMatrix_thread.start()
 
-    plot_thread = threading.Thread(target=PLOT.collect_data, daemon=True)
-    plot_thread.start()
-    
+    #plot_thread = threading.Thread(target=PLOT.collect_data, daemon=True)
+    #plot_thread.start()
+
     print("####################################################")
     print("System Up! Listening to LightSwarm Packets!!")
     print("####################################################")
@@ -44,6 +44,9 @@ if __name__=='__main__':
     print("=" * 60)
     
     try:
+        while True:
+            if STATE.get_plot_enb():
+                PLOT.collect_data()
         WEB.web.run(host="0.0.0.0", port=5000, debug=False, threaded=True)
     except KeyboardInterrupt:
         PLOT.plot_stop.set()
