@@ -188,7 +188,8 @@ HTML_TEMPLATE = """
     </div>
   </div>
 
-  <script>
+let lastResetCounter = -1;
+    
     // Initialize Brightness Line Chart
     const brightnessCtx = document.getElementById('brightnessChart').getContext('2d');
     const brightnessChart = new Chart(brightnessCtx, {
@@ -282,7 +283,7 @@ HTML_TEMPLATE = """
           }
         },
         animation: {
-          duration: 0  // Disable animation for smoother real-time updates
+          duration: 0
         }
       }
     });
@@ -353,11 +354,33 @@ HTML_TEMPLATE = """
       }
     });
 
-    // Update charts with live data
     async function updateCharts() {
       try {
         const response = await fetch('/data');
         const data = await response.json();
+        
+        if (lastResetCounter !== -1 && data.reset_counter !== lastResetCounter) {
+          console.log('🔄 External reset detected! Clearing charts...');
+          
+          // Clear all chart data
+          brightnessChart.data.datasets[0].data = [];
+          brightnessChart.data.datasets[1].data = [];
+          brightnessChart.data.datasets[2].data = [];
+          masterChart.data.datasets[0].data = [0, 0, 0];
+          
+          // Reset axis ranges
+          brightnessChart.options.scales.x.min = 0;
+          brightnessChart.options.scales.x.max = 30;
+          
+          // Show notification
+          updateStatus('🔄 External reset detected!', '#FFA500');
+          setTimeout(() => {
+            updateStatus('● Status: Active', '#4CAF50');
+          }, 2000);
+        }
+        
+        // Update reset counter tracker
+        lastResetCounter = data.reset_counter;
         
         // Update brightness chart datasets
         brightnessChart.data.datasets[0].data = data.time0.map((x, i) => ({
@@ -384,7 +407,7 @@ HTML_TEMPLATE = """
           brightnessChart.options.scales.x.max = 30;
         }
         
-        brightnessChart.update('none'); // 'none' mode for performance
+        brightnessChart.update('none');
         
         // Update master count chart
         masterChart.data.datasets[0].data = data.master_count;

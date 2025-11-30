@@ -15,6 +15,7 @@ WINDOW = 30  # seconds
 # Threading control
 plot_stop = threading.Event()
 plot_reset_flag = threading.Event()
+reset_counter = 0
 
 # Data storage
 t0 = time.time()
@@ -64,6 +65,7 @@ def collect_data():
                 master_count = [0, 0, 0]
                 t0 = time.time()
                 current_time = 0
+                reset_counter += 1
             plot_reset_flag.clear()
         
         # Get brightness from LightSwarm
@@ -151,7 +153,8 @@ def get_plot_data():
             'time2': xs2.tolist(),
             'brightness2': ys2.tolist(),
             'master_count': master_count.copy(),
-            'current_time': current_time
+            'current_time': current_time,
+            'reset_counter': reset_counter
         }
 
 def reset_plot():
