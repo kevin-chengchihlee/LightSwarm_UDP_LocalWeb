@@ -206,6 +206,7 @@ HTML_TEMPLATE = """
             pointRadius: 4,
             pointBackgroundColor: '#00ff00',
             tension: 0.1,
+            type: 'scatter',
             showLine: false
           },
           {
@@ -217,6 +218,7 @@ HTML_TEMPLATE = """
             pointRadius: 4,
             pointBackgroundColor: '#ffff00',
             tension: 0.1,
+            type: 'scatter',
             showLine: false
           },
           {
@@ -228,6 +230,7 @@ HTML_TEMPLATE = """
             pointRadius: 4,
             pointBackgroundColor: '#ff0000',
             tension: 0.1,
+            type: 'scatter',
             showLine: false
           }
         ]
