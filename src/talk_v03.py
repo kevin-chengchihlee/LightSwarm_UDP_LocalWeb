@@ -42,12 +42,17 @@ if __name__=='__main__':
     print("   Network: http://<raspberry-pi-ip>:5000")
     print("\n💡 Press Ctrl+C to stop")
     print("=" * 60)
-    
+    try:
+        WEB.web.run(host="0.0.0.0", port=5000, debug=False, threaded=True)
+
+    except:
+        print("Web fail to init...")
+        
     try:
         while True:
             if STATE.get_plot_enb():
                 PLOT.collect_data()
-        WEB.web.run(host="0.0.0.0", port=5000, debug=False, threaded=True)
+        
     except KeyboardInterrupt:
         PLOT.plot_stop.set()
         time.sleep(0.1)
