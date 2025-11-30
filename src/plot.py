@@ -44,7 +44,7 @@ def collect_data():
     """Background thread: collects sensor data"""
     
     global t0, xs0, ys0, xs1, ys1, xs2, ys2, current_time
-    global master_count, time_data, mem_data, mem_peak_data
+    global master_count, time_data, mem_data, mem_peak_data, reset_counter
     
     device_id = 99
     value = 0
