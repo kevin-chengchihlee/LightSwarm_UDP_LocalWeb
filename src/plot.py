@@ -53,24 +53,21 @@ def collect_data():
 
     while not plot_stop.is_set():
         
-        # ✅ Check reset flag (quick operation)
         if plot_reset_flag.is_set():
             print("Resetting Data!!\n")
-            with data_lock:
-                xs0 = np.array([])
-                ys0 = np.array([])
-                xs1 = np.array([])
-                ys1 = np.array([])
-                xs2 = np.array([])
-                ys2 = np.array([])
-                master_count = [0, 0, 0]
-                t0 = time.time()
-                current_time = 0
-                reset_counter += 1
-                print(f"[RESET] Counter: {reset_counter}")
+            xs0 = np.array([])
+            ys0 = np.array([])
+            xs1 = np.array([])
+            ys1 = np.array([])
+            xs2 = np.array([])
+            ys2 = np.array([])
+            master_count = [0, 0, 0]
+            t0 = time.time()
+            current_time = 0
+            reset_counter += 1
+            print(f"[RESET] Counter: {reset_counter}")
             plot_reset_flag.clear()
         
-        # ✅ Get brightness OUTSIDE the lock (this might be slow!)
         try:
             device_id_, isMaster_, value_ = LS.getLSMasterBright()
             if isMaster_:
@@ -81,7 +78,6 @@ def collect_data():
             time.sleep(0.1)
             continue
         
-        # ✅ Now acquire lock ONLY for data updates (fast!)
         with data_lock:
             current_timestamp = time.time() - t0
             
@@ -136,7 +132,7 @@ def collect_data():
         print("master_count = ", master_count[0], master_count[1], master_count[2])
         
         time.sleep(1)
-        
+
 def get_plot_data():
     """Returns current plot data (thread-safe)"""
     with data_lock:
