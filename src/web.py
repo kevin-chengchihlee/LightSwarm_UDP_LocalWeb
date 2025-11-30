@@ -437,18 +437,18 @@ HTML_TEMPLATE = """
 </html>
 """
 
-@:web.route("/")
+@web.route("/")
 def home():
     """Main dashboard page"""
     return render_template_string(HTML_TEMPLATE)
 
-@:web.route("/data")
+@web.route("/data")
 def get_data():
     """API endpoint: Get current plot data"""
     data = LSP.get_plot_data()
     return jsonify(data)
 
-@:web.route("/reset", methods=["POST"])
+@web.route("/reset", methods=["POST"])
 def reset_plot():
     """API endpoint: Reset plot"""
     LSP.reset_plot()
@@ -457,7 +457,7 @@ def reset_plot():
         "message": "Plot reset successfully!"
     })
 
-@:web.route("/export", methods=["POST"])
+@web.route("/export", methods=["POST"])
 def export_log():
     """API endpoint: Export log"""
     try:
@@ -472,7 +472,7 @@ def export_log():
             "message": f"Export failed: {str(e)}"
         }), 500
 
-@:web.route("/status")
+@web.route("/status")
 def status():
     """API endpoint: System status"""
     data = LSP.get_plot_data()
