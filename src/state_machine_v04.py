@@ -152,6 +152,8 @@ def m_reset():
     global sys_state
     global plot_enb
     sys_state = 3
+    
+    PLOT.reset_counter += 1
 
     UDP.setLSCommand("RESETSWARM")#setting LS cmd to UDP layer
     print("##################")

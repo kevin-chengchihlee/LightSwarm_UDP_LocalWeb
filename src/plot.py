@@ -65,7 +65,7 @@ def collect_data():
             master_count = [0, 0, 0]
             t0 = time.time()
             current_time = 0
-            reset_counter += 1
+            
             print(f"[RESET] Counter: {reset_counter}")
             plot_reset_flag.clear()
             plot_stop.set() #<---stopping plot thread
