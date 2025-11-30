@@ -54,7 +54,8 @@ def collect_data():
     while not plot_stop.is_set():
         
         if plot_reset_flag.is_set():
-            print("Resetting Data!!\n")
+            print("Resetting Data!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n")
+            time.sleep(5)
             xs0 = np.array([])
             ys0 = np.array([])
             xs1 = np.array([])
@@ -66,7 +67,9 @@ def collect_data():
             current_time = 0
             reset_counter += 1
             print(f"[RESET] Counter: {reset_counter}")
+            plot_stop.set() #<---stopping plot thread
             plot_reset_flag.clear()
+            break
         
         try:
             device_id_, isMaster_, value_ = LS.getLSMasterBright()

@@ -154,8 +154,7 @@ def m_reset():
     print("Reset Swarm")
     print("##################")
     plot_enb = False
-    PLOT.plot_stop.set() #<---stopping plot thread
-    PLOT.plot_reset_flag.set()
+    #PLOT.plot_reset_flag.set() #<------resetting plot data
     PLOT.ex_log() #<---log data
     PLOT.reset_plot() #<---resetting plot time and data
     #GPIO.output(led_r, GPIO.HIGH)

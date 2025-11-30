@@ -73,4 +73,4 @@ class LED_MAT:
             for i in range (0, 8):
                 self.show(i+1, DATA[i])
 
-            time.sleep(30/8)
+            time.sleep(1)
