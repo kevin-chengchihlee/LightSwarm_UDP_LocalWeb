@@ -143,6 +143,7 @@ def collect_data():
         time.sleep(1)
 
 def get_plot_data():
+    global reset_counter, current_time
     """Returns current plot data (thread-safe)"""
     with data_lock:
         return {
