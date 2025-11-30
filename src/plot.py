@@ -49,10 +49,11 @@ def collect_data():
     device_id = 99
     value = 0
 
+    print("[COLLECT] Data collection thread started")
+
     while not plot_stop.is_set():
-        # --- Time measurement ---
-        #start = time.perf_counter()
         
+        # ✅ Check reset flag (quick operation)
         if plot_reset_flag.is_set():
             print("Resetting Data!!\n")
             with data_lock:
@@ -66,28 +67,35 @@ def collect_data():
                 t0 = time.time()
                 current_time = 0
                 reset_counter += 1
+                print(f"[RESET] Counter: {reset_counter}")
             plot_reset_flag.clear()
         
-        # Get brightness from LightSwarm
-        device_id_, isMaster_, value_ = LS.getLSMasterBright()
-
-        if isMaster_:
-            device_id = device_id_
-            value = value_
-
+        # ✅ Get brightness OUTSIDE the lock (this might be slow!)
+        try:
+            device_id_, isMaster_, value_ = LS.getLSMasterBright()
+            if isMaster_:
+                device_id = device_id_
+                value = value_
+        except Exception as e:
+            print(f"[ERROR] getLSMasterBright failed: {e}")
+            time.sleep(0.1)
+            continue
+        
+        # ✅ Now acquire lock ONLY for data updates (fast!)
         with data_lock:
+            current_timestamp = time.time() - t0
+            
             if device_id == 0:
-                if device_id < 3 and master_count[device_id] >= 30:
+                if master_count[device_id] >= 30:
                     master_count[0] = 0
                     master_count[1] = 0
                     master_count[2] = 0
 
                 master_count[device_id] += 1
-                xs0 = np.append(xs0, time.time() - t0)
+                xs0 = np.append(xs0, current_timestamp)
                 ys0 = np.append(ys0, value)
                 current_time = xs0[-1]
                 
-                # Keep only data within window
                 if current_time > WINDOW:
                     mask = xs0 >= (current_time - WINDOW)
                     xs0 = xs0[mask]
@@ -100,7 +108,7 @@ def collect_data():
                     master_count[2] = 0
 
                 master_count[device_id] += 1
-                xs1 = np.append(xs1, time.time() - t0)
+                xs1 = np.append(xs1, current_timestamp)
                 ys1 = np.append(ys1, value)
                 current_time = xs1[-1]
                 
@@ -116,7 +124,7 @@ def collect_data():
                     master_count[2] = 0
 
                 master_count[device_id] += 1
-                xs2 = np.append(xs2, time.time() - t0)
+                xs2 = np.append(xs2, current_timestamp)
                 ys2 = np.append(ys2, value)
                 current_time = xs2[-1]
                 
@@ -127,23 +135,9 @@ def collect_data():
 
         print("master_count = ", master_count[0], master_count[1], master_count[2])
         
-        # --- Time measurement ---
-        #end = time.perf_counter()
-        #exe_time = end - start
-        #time_data = np.append(time_data, exe_time)
-        
-        #print(f"Time: {end - start:.6f}s")
-        
-        # --- Memory measurement ---
-        #cur_mem, peak_mem = tracemalloc.get_traced_memory()
-        #mem_data = np.append(mem_data, cur_mem)
-        #mem_peak_data = np.append(mem_peak_data, peak_mem)
-        #print(f"MEM: {cur_mem/1024:.2f} KB, PEAK: {peak_mem/1024:.2f} KB")
-        
         time.sleep(1)
-
+        
 def get_plot_data():
-    global reset_counter, current_time
     """Returns current plot data (thread-safe)"""
     with data_lock:
         return {
