@@ -14,7 +14,6 @@ WINDOW = 30  # seconds
 
 # Threading control
 plot_stop = threading.Event()
-plot_reset_flag = threading.Event()
 reset_counter = 0
 
 # Data storage
@@ -44,7 +43,7 @@ def collect_data():
     """Background thread: collects sensor data"""
     
     global t0, xs0, ys0, xs1, ys1, xs2, ys2, current_time
-    global master_count, time_data, mem_data, mem_peak_data, reset_counter
+    global master_count
     
     device_id = 99
     value = 0
@@ -53,23 +52,6 @@ def collect_data():
 
     while not plot_stop.is_set():
         print("Collecting Data!!!!!!!!!!!!!!!!-//////////////////////////////////////\n")
-        if plot_reset_flag.is_set():
-            print("Resetting Data!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n")
-            time.sleep(5)
-            xs0 = np.array([])
-            ys0 = np.array([])
-            xs1 = np.array([])
-            ys1 = np.array([])
-            xs2 = np.array([])
-            ys2 = np.array([])
-            master_count = [0, 0, 0]
-            t0 = time.time()
-            current_time = 0
-            
-            print(f"[RESET] Counter: {reset_counter}")
-            plot_reset_flag.clear()
-            plot_stop.set() #<---stopping plot thread
-            break
         
         try:
             device_id_, isMaster_, value_ = LS.getLSMasterBright()
@@ -151,9 +133,27 @@ def get_plot_data():
 
 def reset_plot():
     """Reset all plot data"""
-    global t0
+    global t0, xs0, ys0, xs1, ys1, xs2, ys2, current_time
+    global master_count, reset_counter
+
+    reset_counter+=1
+
+    plot_stop.set() #<---stopping plot thread
+    
     t0 = time.time()
-    plot_reset_flag.set()
+    print("Resetting Data!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n")
+    time.sleep(5)
+    xs0 = np.array([])
+    ys0 = np.array([])
+    xs1 = np.array([])
+    ys1 = np.array([])
+    xs2 = np.array([])
+    ys2 = np.array([])
+    master_count = [0, 0, 0]
+    t0 = time.time()
+    current_time = 0
+            
+    print(f"[RESET] Counter: {reset_counter}")
 
 def ex_log():
     """Export data to log file"""

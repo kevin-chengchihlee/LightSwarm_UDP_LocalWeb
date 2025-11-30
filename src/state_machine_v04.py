@@ -46,6 +46,7 @@ def state_machine():
         #photosns_stop.set()
         #blink_rgy_stop.set()
         m_reset() #to reset
+        m_operation()
 
     elif sys_state == 2: #Reset swarm and plot
         photosns_stop.set()
@@ -149,11 +150,9 @@ def m_plot():
     print("##################")
 
 def m_reset():
-    global sys_state
-    global plot_enb
-    sys_state = 3
+    global sys_state, plot_enb
     
-    PLOT.reset_counter += 1
+    sys_state = 3
 
     UDP.setLSCommand("RESETSWARM")#setting LS cmd to UDP layer
     print("##################")
@@ -162,16 +161,14 @@ def m_reset():
     plot_enb = False
     PLOT.ex_log() #<---log data
     PLOT.reset_plot() #<---resetting plot time and data
-    #GPIO.output(led_r, GPIO.HIGH)
+    
     GPIO.output(led_y, GPIO.HIGH)
-    #GPIO.output(led_g, GPIO.HIGH)
     GPIO.output(led_w, GPIO.HIGH)
     GPIO.output(led_r, GPIO.LOW)
     GPIO.output(led_w, GPIO.LOW)
     GPIO.output(led_g, GPIO.LOW)
     time.sleep(3)
     GPIO.output(led_y, GPIO.LOW)
-    #Enter pwr_dwn procedure
 
 def gpio_setup():
     # GPIO setup
