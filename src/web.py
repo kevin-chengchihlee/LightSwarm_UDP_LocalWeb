@@ -7,7 +7,7 @@ Uses Chart.js for true real-time plotting in the browser
 from flask import Flask, render_template_string, jsonify
 import LightSwarm_Plot as LSP
 
-:web = Flask(__name__)
+web = Flask(__name__)
 
 HTML_TEMPLATE = """
 <!DOCTYPE html>
