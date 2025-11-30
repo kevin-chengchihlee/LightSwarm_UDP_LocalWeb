@@ -6,7 +6,7 @@ Uses Chart.js for true real-time plotting in the browser
 
 from flask import Flask, render_template_string, jsonify
 import plot as PLOT
-#import state_machine_v04 as STATE
+import state_machine_v04 as STATE
 
 web = Flask(__name__)
 
@@ -478,7 +478,7 @@ def get_data():
 @web.route("/reset", methods=["POST"])
 def reset_plot():
     """API endpoint: Reset plot"""
-    PLOT.reset_plot()
+    STATE.m_reset()
     return jsonify({
         "status": "success",
         "message": "Plot reset successfully!"
