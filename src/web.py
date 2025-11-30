@@ -205,7 +205,8 @@ HTML_TEMPLATE = """
             borderWidth: 2.5,
             pointRadius: 4,
             pointBackgroundColor: '#00ff00',
-            tension: 0.1
+            tension: 0.1,
+            showLine: false
           },
           {
             label: 'Device 1 Brightness',
@@ -215,7 +216,8 @@ HTML_TEMPLATE = """
             borderWidth: 2.5,
             pointRadius: 4,
             pointBackgroundColor: '#ffff00',
-            tension: 0.1
+            tension: 0.1,
+            showLine: false
           },
           {
             label: 'Device 2 Brightness',
@@ -225,7 +227,8 @@ HTML_TEMPLATE = """
             borderWidth: 2.5,
             pointRadius: 4,
             pointBackgroundColor: '#ff0000',
-            tension: 0.1
+            tension: 0.1,
+            showLine: false
           }
         ]
       },
