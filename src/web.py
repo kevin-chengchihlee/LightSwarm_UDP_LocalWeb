@@ -452,8 +452,7 @@ def get_data():
 @web.route("/reset", methods=["POST"])
 def reset_plot():
     """API endpoint: Reset plot"""
-    #STATE.m_plot()
-    #PLOT.reset_plot()
+    PLOT.reset_plot()
     return jsonify({
         "status": "success",
         "message": "Plot reset successfully!"

@@ -157,7 +157,6 @@ def m_reset():
     PLOT.plot_stop.set() #<---stopping plot thread
     PLOT.ex_log() #<---log data
     PLOT.reset_plot() #<---resetting plot time and data
-    WEB.reset_plot()
     #GPIO.output(led_r, GPIO.HIGH)
     GPIO.output(led_y, GPIO.HIGH)
     #GPIO.output(led_g, GPIO.HIGH)
