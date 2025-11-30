@@ -11,6 +11,7 @@ import LightSwarm as LS
 import plot as PLOT
 import threading
 import re
+import web as WEB
 
 # Pin definitions (BOARD numbering)
 led_r = 37   # Red LED
@@ -156,6 +157,7 @@ def m_reset():
     PLOT.plot_stop.set() #<---stopping plot thread
     PLOT.ex_log() #<---log data
     PLOT.reset_plot() #<---resetting plot time and data
+    WEB.reset_plot()
     #GPIO.output(led_r, GPIO.HIGH)
     GPIO.output(led_y, GPIO.HIGH)
     #GPIO.output(led_g, GPIO.HIGH)
