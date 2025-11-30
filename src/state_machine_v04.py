@@ -139,11 +139,11 @@ def m_plot():
     
     sys_state = 2
     plot_enb = True
-    PLOT.plot_stop.clear()
 
+    PLOT.plot_stop.clear()
     plot_thread = threading.Thread(target=PLOT.collect_data, daemon=True)
     plot_thread.start()
-    
+
     print("##################")
     print("Plot")
     print("##################")
@@ -158,7 +158,6 @@ def m_reset():
     print("Reset Swarm")
     print("##################")
     plot_enb = False
-    #PLOT.plot_reset_flag.set() #<------resetting plot data
     PLOT.ex_log() #<---log data
     PLOT.reset_plot() #<---resetting plot time and data
     #GPIO.output(led_r, GPIO.HIGH)

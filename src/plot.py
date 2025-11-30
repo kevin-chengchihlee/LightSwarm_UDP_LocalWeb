@@ -67,8 +67,8 @@ def collect_data():
             current_time = 0
             reset_counter += 1
             print(f"[RESET] Counter: {reset_counter}")
-            plot_stop.set() #<---stopping plot thread
             plot_reset_flag.clear()
+            plot_stop.set() #<---stopping plot thread
             break
         
         try:
@@ -81,56 +81,55 @@ def collect_data():
             time.sleep(0.1)
             continue
         
-        with data_lock:
-            current_timestamp = time.time() - t0
+        current_timestamp = time.time() - t0
             
-            if device_id == 0:
-                if master_count[device_id] >= 30:
-                    master_count[0] = 0
-                    master_count[1] = 0
-                    master_count[2] = 0
+        if device_id == 0:
+            if master_count[device_id] >= 30:
+                master_count[0] = 0
+                master_count[1] = 0
+                master_count[2] = 0
 
-                master_count[device_id] += 1
-                xs0 = np.append(xs0, current_timestamp)
-                ys0 = np.append(ys0, value)
-                current_time = xs0[-1]
+            master_count[device_id] += 1
+            xs0 = np.append(xs0, current_timestamp)
+            ys0 = np.append(ys0, value)
+            current_time = xs0[-1]
                 
-                if current_time > WINDOW:
-                    mask = xs0 >= (current_time - WINDOW)
-                    xs0 = xs0[mask]
-                    ys0 = ys0[mask]
+            if current_time > WINDOW:
+                mask = xs0 >= (current_time - WINDOW)
+                xs0 = xs0[mask]
+                ys0 = ys0[mask]
 
-            elif device_id == 1:
-                if master_count[device_id] >= 30:
-                    master_count[0] = 0
-                    master_count[1] = 0
-                    master_count[2] = 0
+        elif device_id == 1:
+            if master_count[device_id] >= 30:
+                master_count[0] = 0
+                master_count[1] = 0
+                master_count[2] = 0
 
-                master_count[device_id] += 1
-                xs1 = np.append(xs1, current_timestamp)
-                ys1 = np.append(ys1, value)
-                current_time = xs1[-1]
+            master_count[device_id] += 1
+            xs1 = np.append(xs1, current_timestamp)
+            ys1 = np.append(ys1, value)
+            current_time = xs1[-1]
                 
-                if current_time > WINDOW:
-                    mask = xs1 >= (current_time - WINDOW)
-                    xs1 = xs1[mask]
-                    ys1 = ys1[mask]
+            if current_time > WINDOW:
+                mask = xs1 >= (current_time - WINDOW)
+                xs1 = xs1[mask]
+                ys1 = ys1[mask]
 
-            elif device_id == 2:
-                if master_count[device_id] >= 30:
-                    master_count[0] = 0
-                    master_count[1] = 0
-                    master_count[2] = 0
+        elif device_id == 2:
+            if master_count[device_id] >= 30:
+                master_count[0] = 0
+                master_count[1] = 0
+                master_count[2] = 0
 
-                master_count[device_id] += 1
-                xs2 = np.append(xs2, current_timestamp)
-                ys2 = np.append(ys2, value)
-                current_time = xs2[-1]
+            master_count[device_id] += 1
+            xs2 = np.append(xs2, current_timestamp)
+            ys2 = np.append(ys2, value)
+            current_time = xs2[-1]
                 
-                if current_time > WINDOW:
-                    mask = xs2 >= (current_time - WINDOW)
-                    xs2 = xs2[mask]
-                    ys2 = ys2[mask]
+            if current_time > WINDOW:
+                mask = xs2 >= (current_time - WINDOW)
+                xs2 = xs2[mask]
+                ys2 = ys2[mask]
 
         print("master_count = ", master_count[0], master_count[1], master_count[2])
         
@@ -138,18 +137,17 @@ def collect_data():
 
 def get_plot_data():
     """Returns current plot data (thread-safe)"""
-    with data_lock:
-        return {
-            'time0': xs0.tolist(),
-            'brightness0': ys0.tolist(),
-            'time1': xs1.tolist(),
-            'brightness1': ys1.tolist(),
-            'time2': xs2.tolist(),
-            'brightness2': ys2.tolist(),
-            'master_count': master_count.copy(),
-            'current_time': current_time,
-            'reset_counter': reset_counter
-        }
+    return {
+        'time0': xs0.tolist(),
+        'brightness0': ys0.tolist(),
+        'time1': xs1.tolist(),
+        'brightness1': ys1.tolist(),
+        'time2': xs2.tolist(),
+        'brightness2': ys2.tolist(),
+        'master_count': master_count.copy(),
+        'current_time': current_time,
+        'reset_counter': reset_counter
+    }
 
 def reset_plot():
     """Reset all plot data"""
