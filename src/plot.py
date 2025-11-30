@@ -214,10 +214,3 @@ def ex_log():
             f.write(f"{m/1024:.2f}\n")
         
     print(f"[LOG] Exported data → log/LIGHTSWARM_{timestamp}.txt")
-
-def start_collection_thread():
-    """Start the data collection thread"""
-    thread = threading.Thread(target=collect_data, daemon=True)
-    thread.start()
-    print("[DATA] Background collection thread started")
-    return thread
