@@ -37,7 +37,7 @@ mem_peak_data = np.array([])
 # Thread-safe data access
 data_lock = threading.Lock()
 
-tracemalloc.start()
+#tracemalloc.start()
 
 def collect_data():
     """Background thread: collects sensor data"""
@@ -50,7 +50,7 @@ def collect_data():
 
     while not plot_stop.is_set():
         # --- Time measurement ---
-        start = time.perf_counter()
+        #start = time.perf_counter()
         
         if plot_reset_flag.is_set():
             print("Resetting Data!!\n")
@@ -126,17 +126,17 @@ def collect_data():
         print("master_count = ", master_count[0], master_count[1], master_count[2])
         
         # --- Time measurement ---
-        end = time.perf_counter()
-        exe_time = end - start
-        time_data = np.append(time_data, exe_time)
+        #end = time.perf_counter()
+        #exe_time = end - start
+        #time_data = np.append(time_data, exe_time)
         
-        print(f"Time: {end - start:.6f}s")
+        #print(f"Time: {end - start:.6f}s")
         
         # --- Memory measurement ---
-        cur_mem, peak_mem = tracemalloc.get_traced_memory()
-        mem_data = np.append(mem_data, cur_mem)
-        mem_peak_data = np.append(mem_peak_data, peak_mem)
-        print(f"MEM: {cur_mem/1024:.2f} KB, PEAK: {peak_mem/1024:.2f} KB")
+        #cur_mem, peak_mem = tracemalloc.get_traced_memory()
+        #mem_data = np.append(mem_data, cur_mem)
+        #mem_peak_data = np.append(mem_peak_data, peak_mem)
+        #print(f"MEM: {cur_mem/1024:.2f} KB, PEAK: {peak_mem/1024:.2f} KB")
         
         time.sleep(1)
 
@@ -189,28 +189,5 @@ def ex_log():
         f.write("\n=== Device 2 Data (xs2, ys2) ===\n")
         for t, v in zip(xs2, ys2):
             f.write(f"{t:.2f}, {v}\n")
-        
-        f.write("\n=== Execution Time (sec) ===\n")
-        for t in time_data:
-            f.write(f"{t:.6f}\n")
-            
-        f.write("\n=== AVG Execution Time (sec) ===\n")
-        if len(time_data) > 0:
-            avg_time = statistics.mean(time_data)
-            f.write(f"{avg_time:.6f}\n")
-            print(f"Average execution time: {avg_time:.6f}s")
-        
-        f.write("\n=== Memory Usage (KB) ===\n")
-        for m in mem_data:
-            f.write(f"{m/1024:.2f}\n")
-
-        f.write("\n=== AVG Memory Usage (KB) ===\n")
-        if len(mem_data) > 0:
-            avg_mem = statistics.mean(mem_data)
-            f.write(f"{avg_mem/1024:.2f}\n")
-            
-        f.write("\n=== Peak Memory (KB) ===\n")
-        for m in mem_peak_data:
-            f.write(f"{m/1024:.2f}\n")
         
     print(f"[LOG] Exported data → log/LIGHTSWARM_{timestamp}.txt")
