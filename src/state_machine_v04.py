@@ -155,6 +155,7 @@ def m_reset():
     print("##################")
     plot_enb = False
     PLOT.plot_stop.set() #<---stopping plot thread
+    plot_reset_flag.set()
     PLOT.ex_log() #<---log data
     PLOT.reset_plot() #<---resetting plot time and data
     #GPIO.output(led_r, GPIO.HIGH)
