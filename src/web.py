@@ -5,7 +5,7 @@ Uses Chart.js for true real-time plotting in the browser
 """
 
 from flask import Flask, render_template_string, jsonify
-import LightSwarm_Plot as LSP
+import plot as PLOT
 
 web = Flask(__name__)
 
@@ -445,13 +445,13 @@ def home():
 @web.route("/data")
 def get_data():
     """API endpoint: Get current plot data"""
-    data = LSP.get_plot_data()
+    data = PLOT.get_plot_data()
     return jsonify(data)
 
 @web.route("/reset", methods=["POST"])
 def reset_plot():
     """API endpoint: Reset plot"""
-    LSP.reset_plot()
+    PLOT.reset_plot()
     return jsonify({
         "status": "success",
         "message": "Plot reset successfully!"
@@ -461,7 +461,7 @@ def reset_plot():
 def export_log():
     """API endpoint: Export log"""
     try:
-        LSP.ex_log()
+        PLOT.ex_log()
         return jsonify({
             "status": "success",
             "message": "Log exported successfully!"
@@ -475,11 +475,11 @@ def export_log():
 @web.route("/status")
 def status():
     """API endpoint: System status"""
-    data = LSP.get_plot_data()
+    data = PLOT.get_plot_data()
     return jsonify({
         "status": "running",
         "master_count": data['master_count'],
-        "window_size": LSP.WINDOW,
+        "window_size": PLOT.WINDOW,
         "data_points": {
             "device0": len(data['time0']),
             "device1": len(data['time1']),
