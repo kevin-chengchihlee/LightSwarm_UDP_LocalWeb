@@ -28,7 +28,6 @@ if __name__=='__main__':
 
     plot_thread = threading.Thread(target=PLOT.collect_data, daemon=True)
     plot_thread.start()
-    #PLOT.plot_stop.set()
     print("####################################################")
     print("System Up! Listening to LightSwarm Packets!!")
     print("####################################################")
