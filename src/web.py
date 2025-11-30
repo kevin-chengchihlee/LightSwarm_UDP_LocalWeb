@@ -199,6 +199,7 @@ HTML_TEMPLATE = """
         datasets: [
           {
             label: 'Device 0 Brightness',
+            type: 'scatter',
             data: [],
             borderColor: '#00ff00',
             backgroundColor: 'rgba(0, 255, 0, 0.1)',
@@ -206,11 +207,11 @@ HTML_TEMPLATE = """
             pointRadius: 4,
             pointBackgroundColor: '#00ff00',
             tension: 0.1,
-            type: 'scatter',
             showLine: false
           },
           {
             label: 'Device 1 Brightness',
+            type: 'scatter',
             data: [],
             borderColor: '#ffff00',
             backgroundColor: 'rgba(255, 255, 0, 0.1)',
@@ -218,11 +219,11 @@ HTML_TEMPLATE = """
             pointRadius: 4,
             pointBackgroundColor: '#ffff00',
             tension: 0.1,
-            type: 'scatter',
             showLine: false
           },
           {
             label: 'Device 2 Brightness',
+            type: 'scatter',
             data: [],
             borderColor: '#ff0000',
             backgroundColor: 'rgba(255, 0, 0, 0.1)',
@@ -230,7 +231,6 @@ HTML_TEMPLATE = """
             pointRadius: 4,
             pointBackgroundColor: '#ff0000',
             tension: 0.1,
-            type: 'scatter',
             showLine: false
           }
         ]
