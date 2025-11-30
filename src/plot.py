@@ -52,7 +52,7 @@ def collect_data():
     print("[COLLECT] Data collection thread started")
 
     while not plot_stop.is_set():
-        
+        print("Collecting Data!!!!!!!!!!!!!!!!-//////////////////////////////////////\n")
         if plot_reset_flag.is_set():
             print("Resetting Data!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n")
             time.sleep(5)
