@@ -26,8 +26,6 @@ if __name__=='__main__':
     ledMatrix_thread = threading.Thread(target=mat.show_swarm, daemon=True)
     ledMatrix_thread.start()
 
-    plot_thread = threading.Thread(target=PLOT.collect_data, daemon=True)
-    plot_thread.start()
     print("####################################################")
     print("System Up! Listening to LightSwarm Packets!!")
     print("####################################################")
