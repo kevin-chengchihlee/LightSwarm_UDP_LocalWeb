@@ -6,7 +6,7 @@ Uses Chart.js for true real-time plotting in the browser
 
 from flask import Flask, render_template_string, jsonify
 import plot as PLOT
-import state_machine_v04 as STATE
+import state_machine_v05 as STATE
 
 web = Flask(__name__)
 

@@ -3,6 +3,7 @@
 #Kevin Lee 10/24/2025 Error mode recovery bug fix
 #v03 Kevin Lee 11/03/2025 Modified for LightSwarm Project
 #v04 Kevin Lee 11/13/2025 Modified for LightSwarm Project with plot
+#v05 Kevin Lee 11/29/2025 Modified for CodeRED
 
 import RPi.GPIO as GPIO
 import time
