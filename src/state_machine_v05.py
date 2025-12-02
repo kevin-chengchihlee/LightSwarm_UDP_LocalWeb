@@ -43,7 +43,7 @@ def state_machine():
     if sys_state == 0: #from init to operation
         m_operation()
 
-    elif sys_state == 1:  #from norm to reset #not used
+    elif sys_state == 1:  #from norm to reset
         #photosns_stop.set()
         #blink_rgy_stop.set()
         m_reset() #to reset
